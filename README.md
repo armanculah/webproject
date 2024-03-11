@@ -1,3 +1,4 @@
 # webproject
 This is my repository for my project I am doing for the course IT207
 Milestone 1 (Creating GitHub repo and front end of my website)
+My project has the goal to create a simple and functional blogpage as a webpage
