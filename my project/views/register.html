@@ -1,0 +1,80 @@
+
+<body>
+    <div class="container login-container">
+        <form id="login-form"> <!-- Add the id="login-form" -->
+            <h2 class="text-center mb-4" style= "padding-top: 30px;">Register</h2>
+            <div class="form-group">
+                <label for="email">Email:</label> <!-- Changed from "Username" to "Email" -->
+                <input type="text" class="form-control" id="email" name="email" placeholder="Enter your email" required> <!-- Added name="email" and adjusted id and placeholder -->
+            </div>
+            <div class="form-group">
+                <label for="password">Password:</label>
+                <input type="password" class="form-control" id="password" name="password" placeholder="Enter your password" required> <!-- Added name="password" -->
+            </div>
+            <div class="form-group">
+                <label for="repeatpassword">Repeat Password:</label>
+                <input type="password" class="form-control" id="repeatpassword" name="repeatpassword" placeholder="Repeat your password" required> <!-- Added name="repeated password" -->
+            </div>
+            <button type="submit" class="btn btn-primary btn-block" style="margin-bottom: 70px;">Register</button>
+        </form>
+    </div>
+    </body>
+
+    <script>
+        $(document).ready(function() {
+           // Initialize jQuery Validation plugin on the login form
+           $('#login-form').validate({
+              rules: {
+                 email: {
+                    required: true,
+                    email: true,
+                    maxlength: 50
+                 },
+                 password: {
+                    required: true,
+                    minlength: 3,
+                    maxlength: 20
+                 },
+                 repeatpassword: {
+                    required: true,
+                    equalTo: "#password"
+                 }
+              },
+              messages: {
+                 email: {
+                    required: "Please enter your email",
+                    email: "Please enter a valid email address",
+                    maxlength: "Email must be at most 50 characters long"
+                 },
+                 password: {
+                    required: "Please enter your password",
+                    minlength: "Password must be at least 3 characters long",
+                    maxlength: "Password must be at most 20 characters long"
+                 },
+                 repeatpassword: {
+                    required: "Please confirm your password",
+                    equalTo: "Passwords do not match"
+                 }
+              },
+              submitHandler: function(form) {
+                 var userData = {
+                    email: $('input[name="email"]').val().trim(),
+                    password: $('input[name="password"]').val().trim()
+                 };
+        
+                 // Convert user data object to JSON string
+                 var jsonData = JSON.stringify(userData);
+        
+                 // Store JSON data in local storage
+                 localStorage.setItem('userData', jsonData);
+        
+                 // Redirect to the profile page
+                 window.location.href = '#def';
+        
+                 // Optionally, reset the form. Commented out if you're redirecting.
+                 // form.reset();
+              }
+           });
+        });
+        </script>
+        

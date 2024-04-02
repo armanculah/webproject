@@ -1,0 +1,72 @@
+[
+    {
+      "id": 1,
+      "name": "John Doe",
+      "number": "1234567890",
+      "email": "john@example.com",
+      "password": "password123"
+    },
+    {
+      "id": 2,
+      "name": "Jane Smith",
+      "number": "2345678901",
+      "email": "jane@example.com",
+      "password": "password456"
+    },
+    {
+      "id": 3,
+      "name": "Alice Johnson",
+      "number": "3456789012",
+      "email": "alice@example.com",
+      "password": "password789"
+    },
+    {
+      "id": 4,
+      "name": "Bob Brown",
+      "number": "4567890123",
+      "email": "bob@example.com",
+      "password": "passwordabc"
+    },
+    {
+      "id": 5,
+      "name": "Emily Davis",
+      "number": "5678901234",
+      "email": "emily@example.com",
+      "password": "passworddef"
+    },
+    {
+      "id": 6,
+      "name": "Michael Wilson",
+      "number": "6789012345",
+      "email": "michael@example.com",
+      "password": "passwordghi"
+    },
+    {
+      "id": 7,
+      "name": "Sarah Martinez",
+      "number": "7890123456",
+      "email": "sarah@example.com",
+      "password": "passwordjkl"
+    },
+    {
+      "id": 8,
+      "name": "David Anderson",
+      "number": "8901234567",
+      "email": "david@example.com",
+      "password": "passwordmno"
+    },
+    {
+      "id": 9,
+      "name": "Laura Taylor",
+      "number": "9012345678",
+      "email": "laura@example.com",
+      "password": "passwordpqr"
+    },
+    {
+      "id": 10,
+      "name": "James Lee",
+      "number": "0123456789",
+      "email": "james@example.com",
+      "password": "passwordstu"
+    }
+  ]

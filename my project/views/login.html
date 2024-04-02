@@ -1,0 +1,73 @@
+
+<body>
+    <div class="container login-container">
+        <form id="login-form"> <!-- Add the id="login-form" -->
+            <h2 class="text-center mb-4" style= "padding-top: 30px;">Login</h2>
+            <div class="form-group">
+                <label for="email">Email:</label> <!-- Changed from "Username" to "Email" -->
+                <input type="text" class="form-control" id="email" name="email" placeholder="Enter your email" required> <!-- Added name="email" and adjusted id and placeholder -->
+            </div>
+            <div class="form-group">
+                <label for="password">Password:</label>
+                <input type="password" class="form-control" id="password" name="password" placeholder="Enter your password" required> <!-- Added name="password" -->
+            </div>
+            <button type="submit" class="btn btn-primary btn-block" style="margin-bottom: 70px;">Login</button>
+        </form>
+    </div>
+    </body>
+ <script>
+    $(document).ready(function() {
+        $('#login-form').validate({
+            rules: {
+                email: {
+                    required: true,
+                    email: true
+                },
+                password: {
+                    required: true,
+                    minlength: 8 // Adjusted to match the minlength message
+                }
+            },
+            messages: {
+                email: {
+                    required: 'Please enter your email',
+                    email: 'Please enter a valid email address'
+                },
+                password: {
+                    required: 'Please enter your password',
+                    minlength: 'Password must be at least 8 characters long' // This message now correctly reflects the rule
+                }
+            },
+            submitHandler: function (form) {
+                var enteredEmail = $('input[name="email"]').val().trim();
+                var enteredPassword = $('input[name="password"]').val().trim();
+    
+                // Ajax call remains the same since it's dependent on data format and endpoint, not the HTML structure.
+                $.ajax({
+                    url: 'http://127.0.0.1:3000/my%20project/assets/js/users.json',
+                    dataType: 'json',
+                    success: function (data) {
+                        var found = false;
+                        $.each(data, function (index, item) {
+                            if (item.email === enteredEmail && item.password === enteredPassword) {
+                                localStorage.setItem('userId', item.id);
+                                window.location.href = '#def';
+                                found = true;
+                                return false;
+                            }
+                        });
+                        if (!found) {
+                            console.log("no such user in json file.");
+                        }
+                    },
+                    error: function (xhr, status, error) {
+                        console.error('Error loading JSON data:', error);
+                    }
+                });
+    
+                form.reset(); // This resets the form fields after submission
+            }
+        });
+    });
+    </script>
+    
