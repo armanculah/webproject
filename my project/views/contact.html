@@ -1,0 +1,108 @@
+
+      <!-- contact section start -->
+      <div class="contact_section layout_padding">
+         <div class="container">
+            <div class="row">
+               <div class="col-md-6">
+                  <div id="carouselExampleIndicators" class="carousel slide" data-ride="carousel">
+                     <ol class="carousel-indicators">
+                        <li data-target="#carouselExampleIndicators" data-slide-to="0" class="active" style="text-indent: 0; border: none; color: #000; font-size: 18px; text-align: center;">1</li>
+                        <li data-target="#carouselExampleIndicators" data-slide-to="1"style="text-indent: 0; border: none; color: #000; font-size: 18px; text-align: center;">2</li>
+                        <li data-target="#carouselExampleIndicators" data-slide-to="2"style="text-indent: 0; border: none; color: #000; font-size: 18px; text-align: center;">3</li>
+                        <li data-target="#carouselExampleIndicators" data-slide-to="3"style="text-indent: 0; border: none; color: #000; font-size: 18px; text-align: center;">4</li>
+                     </ol>
+                     <div class="carousel-inner">
+                        <div class="carousel-item active">
+                           <div class="contact_img1"></div>
+                        </div>
+                        <div class="carousel-item">
+                           <div class="contact_img2"></div>
+                        </div>
+                        <div class="carousel-item">
+                           <div class="contact_img3"></div>
+                        </div>
+                        <div class="carousel-item">
+                           <div class="contact_img4"></div>
+                        </div>
+                     </div>
+                  </div>
+               </div>
+               <div class="col-md-6">
+                  <form id="contact-form" class="mail_section">
+                      <h1 class="contact_taital">Contact us</h1>
+                      <input type="text" class="email_text" placeholder="Name" name="name" required>
+                      <input type="text" class="email_text" placeholder="Phone" name="phone" required>
+                      <input type="email" class="email_text" placeholder="Email" name="email" required>
+                      <textarea class="massage_text" placeholder="Message" rows="5" name="message" required></textarea>
+                      <button type="submit" class="send_bt">Send</button>
+                  </form>
+              </div>
+            </div>
+         </div>
+      </div>
+
+      <script>
+         $(document).ready(function() {
+            // Initialize jQuery Validation plugin for the contact form
+            $('#contact-form').validate({
+               rules: {
+                  name: {
+                     required: true,
+                     maxlength: 50
+                  },
+                  phone: {
+                     required: true,
+                     digits: true, // Assuming phone number should only contain digits
+                     minlength: 10, // Assuming a minimum length for phone numbers
+                     maxlength: 15 // Adjust as per your requirement
+                  },
+                  email: {
+                     required: true,
+                     email: true,
+                     maxlength: 50
+                  },
+                  message: {
+                     required: true,
+                     minlength: 5, // Minimum length for the message
+                     maxlength: 500 // Maximum length for the message
+                  }
+               },
+               messages: {
+                  name: "Please enter your name",
+                  phone: {
+                     required: "Please enter your phone number",
+                     digits: "Please enter only digits",
+                     minlength: "Your phone number must be at least 10 characters long",
+                     maxlength: "Your phone number must not exceed 15 characters"
+                  },
+                  email: "Please enter a valid email address",
+                  message: "Please enter your message"
+               },
+               submitHandler: function(form) {
+                  var userData = {
+                     name: $('input[name="name"]').val().trim(),
+                     phone: $('input[name="phone"]').val().trim(),
+                     email: $('input[name="email"]').val().trim(),
+                     message: $('textarea[name="message"]').val().trim()
+                  };
+         
+                  // Convert user data object to JSON string
+                  var jsonData = JSON.stringify(userData);
+         
+                  // Store JSON data in local storage
+                  localStorage.setItem('userData', jsonData);
+         
+               
+                  // window.location.href = '#home';
+         
+                  alert('Your message has been sent successfully.');
+         
+                  // Reset the form
+                  form.reset();
+               }
+            });
+         });
+         </script>
+         
+      <!-- contact section end -->
+      

@@ -135,7 +135,7 @@
         background: linear-gradient(45deg, transparent 31%, #080c50 31%);
     }
     .banner_section {
-        margin-bottom: 230px;
+        margin-bottom: 200px;
     }
     .box_main {
         width: 72%;
@@ -188,7 +188,7 @@
         font-size: 30px;
     }
     .banner_section {
-        margin-bottom: 190px;
+        margin-bottom: 0px;
         background-size: cover;
         height: 400px;
         padding-top: 50px;

@@ -50,7 +50,10 @@ body {
     font-weight: normal;
     overflow-x: hidden;
 }
-
+text-center mb-4
+{
+    margin-top: 100px!important;
+}
 a {
     color: #1f1f1f;
     text-decoration: none !important;
@@ -350,6 +353,7 @@ button {
 
 .touch_setion {
     width: 100%;
+    margin-bottom: 100px;
     float: left;
 }
 
@@ -859,8 +863,8 @@ button {
 .contact_section {
     width: 100%;
     float: left;
-    padding-bottom: 90px;
-    padding-top: 170px;
+    padding-bottom: 40px;
+    padding-top: 80px;
 }
 
 .contact_img1 {
@@ -998,6 +1002,7 @@ textarea#comment::placeholder {
     background-color: #171717;
     height: auto;
     padding-bottom: 50px;
+    margin-top: 33px;
 }
 
 .footer_logo {
