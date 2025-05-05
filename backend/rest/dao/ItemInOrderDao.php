@@ -1,5 +1,5 @@
 <?php
-require_once 'BaseDao.php';
+require_once __DIR__ . '/BaseDao.php';
 
 class ItemInOrderDao extends BaseDao {
     public function __construct() {
@@ -32,6 +32,24 @@ class ItemInOrderDao extends BaseDao {
             DELETE FROM item_in_order WHERE order_id = :oid AND product_id = :pid
         ");
         return $stmt->execute(['oid' => $order_id, 'pid' => $product_id]);
+    }
+
+    public function updateItemQuantity($orderId, $productId, $quantity) {
+        $stmt = $this->connection->prepare(
+            "UPDATE item_in_order SET quantity = :quantity WHERE order_id = :order_id AND product_id = :product_id"
+        );
+        $stmt->bindParam(':quantity', $quantity);
+        $stmt->bindParam(':order_id', $orderId);
+        $stmt->bindParam(':product_id', $productId);
+        return $stmt->execute();
+    }
+
+    public function clearItems($orderId) {
+        $stmt = $this->connection->prepare(
+            "DELETE FROM item_in_order WHERE order_id = :order_id"
+        );
+        $stmt->bindParam(':order_id', $orderId);
+        return $stmt->execute();
     }
 }
 ?>

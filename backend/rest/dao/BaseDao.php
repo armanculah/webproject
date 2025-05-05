@@ -1,5 +1,5 @@
 <?php
-require_once '../config.php';
+require_once __DIR__ . '/config.php';
 
 class BaseDao {
     protected $table;
@@ -55,6 +55,12 @@ class BaseDao {
         $stmt = $this->connection->prepare("SELECT * FROM {$this->table} WHERE {$field} = :value");
         $stmt->bindParam(':value', $value);
         $stmt->execute();
+        return $stmt->fetchAll();
+    }
+
+    protected function query($query, $params = []) {
+        $stmt = $this->connection->prepare($query);
+        $stmt->execute($params);
         return $stmt->fetchAll();
     }
 }

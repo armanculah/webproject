@@ -1,6 +1,5 @@
-
 <?php
-require_once 'BaseDao.php';
+require_once __DIR__ . '/BaseDao.php';
 
 class ProductNoteDao extends BaseDao {
     public function __construct() {
@@ -26,19 +25,10 @@ class ProductNoteDao extends BaseDao {
     }
 
     public function removeNoteFromProduct($product_id, $note_id) {
-        $stmt = $this->connection->prepare("
-            DELETE FROM product_note
-            WHERE product_id = :pid AND note_id = :nid
-        ");
+        $stmt = $this->connection->prepare(
+            "DELETE FROM product_note WHERE product_id = :pid AND note_id = :nid"
+        );
         return $stmt->execute(['pid' => $product_id, 'nid' => $note_id]);
-    }
-
-    public function deleteComposite($productId, $noteId) {
-        $query = "DELETE FROM product_notes WHERE product_id = :product_id AND note_id = :note_id";
-        $stmt = $this->connection->prepare($query);
-        $stmt->bindParam(':product_id', $productId);
-        $stmt->bindParam(':note_id', $noteId);
-        $stmt->execute();
     }
 
 }
