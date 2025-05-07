@@ -1,5 +1,5 @@
 <?php
-require_once 'BaseDao.php';
+require_once __DIR__ . '/BaseDao.php';
 
 class NotesDao extends BaseDao {
 
@@ -22,5 +22,18 @@ class NotesDao extends BaseDao {
         $stmt = $this->connection->prepare("SELECT * FROM notes WHERE note_name = :name");
         $stmt->execute(['name' => $note_name]);
         return $stmt->fetch();
+    }
+
+    public function create($data) {
+        $stmt = $this->connection->prepare("INSERT INTO notes (note_name) VALUES (:note_name)");
+        $stmt->bindParam(':note_name', $data['note_name']);
+        $stmt->execute();
+        return $this->connection->lastInsertId();
+    }
+
+    public function delete($noteId) {
+        $stmt = $this->connection->prepare("DELETE FROM notes WHERE note_id = :note_id");
+        $stmt->bindParam(':note_id', $noteId);
+        return $stmt->execute();
     }
 }
