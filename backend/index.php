@@ -13,20 +13,29 @@ use Firebase\JWT\JWT;
 use Firebase\JWT\Key;
 
 // Register services and middleware
-Flight::register('auth_service', "AuthService");
-Flight::register('auth_middleware', "AuthMiddleware");
-
+Flight::map('auth_service', function() {
+    return new AuthService();
+});
+Flight::map('auth_service_instance', function() { return Flight::get('auth_service'); });
+Flight::map('auth_middleware', function() {
+    return new AuthMiddleware();
+});
 
 // Global middleware for token verification
 Flight::route('/*', function() {
+    $url = strtolower(Flight::request()->url);
+    $method = strtoupper(Flight::request()->method);
+    error_log("DEBUG: Checking URL in middleware: $url, METHOD: $method");
+    // Allow unauthenticated access to login/register (with or without /rest and version prefix)
     if (
-        strpos(Flight::request()->url, '/auth/login') === 0 ||
-        strpos(Flight::request()->url, '/auth/register') === 0
+        preg_match('#^(/rest)?(/v[0-9]+)?/auth/login/?$#i', $url) ||
+        preg_match('#^(/rest)?(/v[0-9]+)?/auth/register/?$#i', $url)
     ) {
+        error_log("DEBUG: Middleware bypassed for public auth route: $url");
         return true;
     } else {
         try {
-            $token = Flight::request()->getHeader("Authentication");
+            $token = Flight::request()->getHeader("Authorization");
             if (Flight::auth_middleware()->verifyToken($token)) {
                 return true;
             }

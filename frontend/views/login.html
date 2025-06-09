@@ -25,28 +25,28 @@ rel="stylesheet"
   
               <h3 class="mb-5">Sign in</h3>
   
-              <div data-mdb-input-init class="form-outline mb-4">
-                <input type="email" id="typeEmailX-2" class="form-control form-control-lg" oninput="validateEmail()" />
-                <label class="form-label" for="typeEmailX-2">Email</label>
-                <div id="emailError" style="display:none; color: rgba(84, 35, 153, 0.631); border-color: rgba(84, 35, 153, 0.631);">Please enter a valid email address.</div>
-              </div>
+              <form id="login-form">
+                <div data-mdb-input-init class="form-outline mb-4">
+                  <input type="email" id="login-email" class="form-control form-control-lg" oninput="validateEmail()" required />
+                  <label class="form-label" for="login-email">Email</label>
+                  <div id="emailError" style="display:none; color: rgba(84, 35, 153, 0.631); border-color: rgba(84, 35, 153, 0.631);">Please enter a valid email address.</div>
+                </div>
+                <div data-mdb-input-init class="form-outline mb-4">
+                  <input type="password" id="login-password" class="form-control form-control-lg" oninput="validatePassword()" minlength="6" required />
+                  <label class="form-label" for="login-password">Password</label>
+                  <div id="passwordError" style="display:none; color: rgba(84, 35, 153, 0.631); border-color: rgba(84, 35, 153, 0.631);">Password is too short.</div>
+                </div>
+                <!-- Checkbox -->
+                <div class="form-check d-flex justify-content-start mb-4">
+                  <input class="form-check-input" type="checkbox" value="" id="form1Example3" />
+                  <label class="form-check-label" for="form1Example3"> Remember password </label>
+                </div>
   
-              <div data-mdb-input-init class="form-outline mb-4">
-                <input type="password" id="typePasswordX-2" class="form-control form-control-lg" oninput="validatePassword()" minlength="6" />
-                <label class="form-label" for="typePasswordX-2">Password</label>
-                <div id="passwordError" style="display:none; color: rgba(84, 35, 153, 0.631); border-color: rgba(84, 35, 153, 0.631);">Password is too short.</div>
-              </div>
+                <button data-mdb-button-init data-mdb-ripple-init class="btn btn-lg btn-block" type="submit" style="background-color: rgba(84, 35, 153, 0.631); border-color: rgba(84, 35, 153, 0.631); color: white;">Log in</button>
   
-              <!-- Checkbox -->
-              <div class="form-check d-flex justify-content-start mb-4">
-                <input class="form-check-input" type="checkbox" value="" id="form1Example3" />
-                <label class="form-check-label" for="form1Example3"> Remember password </label>
-              </div>
-  
-              <button data-mdb-button-init data-mdb-ripple-init class="btn btn-lg btn-block" type="submit" style="background-color: rgba(84, 35, 153, 0.631); border-color: rgba(84, 35, 153, 0.631); color: white;" href=#signup; >Log in</button>
-  
-              <p class="text-center text-muted mt-5 mb-0">Don't have an account? <a href="#signup"
-                class="fw-bold text-body"><u>Sign Up Here!</u></a></p>
+                <p class="text-center text-muted mt-5 mb-0">Don't have an account? <a href="#signup"
+                  class="fw-bold text-body"><u>Sign Up Here!</u></a></p>
+              </form>
   
             </div>
           </div>
@@ -57,7 +57,7 @@ rel="stylesheet"
 </main>
 <script>
 function validateEmail() {
-  const email = document.getElementById('typeEmailX-2').value;
+  const email = document.getElementById('login-email').value;
   const emailError = document.getElementById('emailError');
   const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
   if (!emailPattern.test(email)) {
@@ -68,7 +68,7 @@ function validateEmail() {
 }
 
 function validatePassword() {
-  const password = document.getElementById('typePasswordX-2').value;
+  const password = document.getElementById('login-password').value;
   const passwordError = document.getElementById('passwordError');
   if (password.length < 6) {
     passwordError.style.display = 'block';
@@ -85,10 +85,24 @@ src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.17.0/jquery.valida
 src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
 <script
 src="https://cdn.jsdelivr.net/npm/toastr@2.1.4/build/toastr.min.js"></script>
-<script src="../utils/constants.js"></script>
-<script src="../services/user-service.js"></script>
-<script type="text/javascript">
-UserService.init();
+<script src="/armanculah/webproject/frontend/utils/constants.js"></script>
+<script src="/armanculah/webproject/frontend/utils/rest-client.js"></script>
+<script src="/armanculah/webproject/frontend/services/user-service.js"></script>
+<script>
+console.log("login.html loaded");
+document.getElementById('login-form').addEventListener('submit', function(event) {
+  event.preventDefault();
+  var entity = {
+    "email": document.getElementById('login-email').value,
+    "password": document.getElementById('login-password').value
+  };
+  console.log("Login form submitted", entity);
+  if (typeof UserService === 'undefined') {
+    console.error("UserService is not defined!");
+  } else {
+    UserService.login(entity);
+  }
+});
 </script>
 </body>
 </html>

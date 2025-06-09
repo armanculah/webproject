@@ -54,6 +54,7 @@ if (!class_exists('Database')) {
      }
      
 }
+if (!class_exists('ConfigDAO')) {
     class ConfigDAO
     {
         public static function getConfig()
@@ -67,6 +68,7 @@ if (!class_exists('Database')) {
                 'jwt_secret' => Config::JWT_SECRET()
             ];
         }
+    }
 }
 
 

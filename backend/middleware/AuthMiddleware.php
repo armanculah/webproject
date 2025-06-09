@@ -2,6 +2,7 @@
 use Firebase\JWT\JWT;
 use Firebase\JWT\Key;
 
+if (!function_exists('require_auth')) {
 function require_auth() {
     $headers = getallheaders();
     if (!isset($headers['Authorization'])) {
@@ -20,7 +21,9 @@ function require_auth() {
         Flight::halt(401, json_encode(['status' => 'error', 'message' => 'Unauthorized - Invalid token']));
     }
 }
+}
 
+if (!function_exists('require_role')) {
 function require_role($role) {
     require_auth();
     $user = Flight::get('user');
@@ -30,7 +33,9 @@ function require_role($role) {
         Flight::halt(403, json_encode(['status' => 'error', 'message' => 'Forbidden - Insufficient role', 'required_role' => $role]));
     }
 }
+}
 
+if (!class_exists('AuthMiddleware')) {
 class AuthMiddleware {
    public function verifyToken($token){
        if(!$token) {
@@ -68,4 +73,5 @@ class AuthMiddleware {
            Flight::halt(403, json_encode(['status' => 'error', 'message' => 'Access denied: permission missing']));
        }
    }   
+}
 }

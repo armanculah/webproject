@@ -19,4 +19,9 @@ I enabled my server, and connected to my repo. Started working on the fronted of
 Week 2: Break due to sickness and personal events <br>
 Week 3: Fronted done, preparing for Milestone II <br>
 Week 4 - 6: DAO layer completed, working on Milestone 3  <br>
-Week 7: <br>
+
+Milestone 4 compleated <br>
+Milestone 5, website is deployed, frontend not connected <br>
+<br>
+website link: https://aragon-frontend-wm6hn.ondigitalocean.app/#profile
+
