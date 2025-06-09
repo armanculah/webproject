@@ -29,34 +29,32 @@ if (!class_exists('Database')) {
     }
 
 
-    class Config
-{
-   public static function DB_NAME()
-   {
-       return 'database_name'; 
-   }
-   public static function DB_PORT()
-   {
-       return  3306;
-   }
-   public static function DB_USER()
-   {
-       return 'root';
-   }
-   public static function DB_PASSWORD()
-   {
-       return '';
-   }
-   public static function DB_HOST()
-   {
-       return '127.0.0.1';
-   }
-
-
-   public static function JWT_SECRET() {
-       return getenv('JWT_SECRET') ?: 'fallback_secure_key';
-   }
+    class Config {
+        public static function DB_NAME() {
+            return Config::get_env("DB_NAME", "Aragon");
+        }
+        public static function DB_PORT() {
+            return Config::get_env("DB_PORT", 3306);
+        }
+        public static function DB_USER() {
+            return Config::get_env("DB_USER", 'root');
+        }
+        public static function DB_PASSWORD() {
+            return Config::get_env("DB_PASSWORD", '12345678');
+        }
+        public static function DB_HOST() {
+            return Config::get_env("DB_HOST", '127.0.0.1');
+        }
+        public static function JWT_SECRET() {
+            return Config::get_env("JWT_SECRET", 'fallback_secure_key');
+        }
+        public static function get_env($name, $default){
+            return isset($_ENV[$name]) && trim($_ENV[$name]) != "" ? $_ENV[$name] : $default;
+        }
+     }
+     
 }
+if (!class_exists('ConfigDAO')) {
     class ConfigDAO
     {
         public static function getConfig()
@@ -70,6 +68,7 @@ if (!class_exists('Database')) {
                 'jwt_secret' => Config::JWT_SECRET()
             ];
         }
+    }
 }
-}
-?>
+
+

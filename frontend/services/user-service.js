@@ -13,9 +13,18 @@ var UserService = {
     },
     login: function (entity) {
         RestClient.authenticate("auth/login", entity, function (result) {
-            console.log(result);
-            localStorage.setItem("user_token", result.data.token);
-            window.location.replace("index.html");
+            // Determine role from backend response
+            let role = 'user';
+            if ((result.role_id === 1 || result.role === 'admin' || result.role === 'Admin')) {
+                role = 'admin';
+            }
+            localStorage.setItem("user_token", result.token);
+            localStorage.setItem("role", role);
+            if (role === 'admin') {
+                window.location.hash = "#adminpanel";
+            } else {
+                window.location.hash = "#profile";
+            }
         }, function (error) {
             toastr.error(error?.responseText ? error.responseText : 'Error');
         });
@@ -54,5 +63,28 @@ var UserService = {
         } else {
             window.location.replace("login.html");
         }
+    },
+    register: function (entity) {
+        // Map frontend fields to backend expected fields
+        const payload = {
+            user_name: entity["register-username"],
+            email: entity["register-email"],
+            password: entity["register-password"]
+        };
+        RestClient.authenticate("auth/register", payload, function (result) {
+            let role = 'user';
+            if (result.data && (result.data.role_id === 1 || result.data.role === 'admin' || result.data.role === 'Admin')) {
+                role = 'admin';
+            }
+            localStorage.setItem("user_token", result.data.token);
+            localStorage.setItem("role", role);
+            if (role === 'admin') {
+                window.location.replace("adminpanel.html");
+            } else {
+                window.location.replace("profile.html");
+            }
+        }, function (error) {
+            toastr.error(error?.responseText ? error.responseText : 'Error');
+        });
     }
 };

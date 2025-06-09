@@ -1,5 +1,5 @@
 <?php
-require_once 'BaseService.php';
+require_once __DIR__ . '/BaseService.php';
 require_once __DIR__ . '/../dao/AuthDao.php';
 use Firebase\JWT\JWT;
 use Firebase\JWT\Key;
@@ -8,8 +8,10 @@ use Firebase\JWT\Key;
 class AuthService extends BaseService {
    private $auth_dao;
    public function __construct() {
-       $this->auth_dao = new AuthDao();
-       parent::__construct(new AuthDao);
+       error_log('DEBUG: Constructing AuthService');
+       $dao = new AuthDao();
+       $this->auth_dao = $dao;
+       parent::__construct($dao);
    }
 
 
@@ -19,8 +21,8 @@ class AuthService extends BaseService {
 
 
    public function register($entity) {  
-       if (empty($entity['email']) || empty($entity['password'])) {
-           return ['success' => false, 'error' => 'Email and password are required.'];
+       if (empty($entity['user_name']) || empty($entity['email']) || empty($entity['password'])) {
+           return ['success' => false, 'error' => 'Username, email, and password are required.'];
        }
 
 
@@ -31,7 +33,14 @@ class AuthService extends BaseService {
 
        $entity['password'] = password_hash($entity['password'], PASSWORD_BCRYPT);
 
-       $entity = parent::create($entity);
+       if (!isset($entity['role_id'])) {
+           $entity['role_id'] = 2; // Default role for new users
+       }
+
+       $created = parent::create($entity);
+       if (!$created) {
+           return ['success' => false, 'error' => 'Failed to create user.'];
+       }
 
        unset($entity['password']);
 

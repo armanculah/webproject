@@ -499,7 +499,7 @@ Flight::route('POST /checkout', function() {
 });
 
 // Authentication Middleware and Routes
-require_once __DIR__ . '/../../middleware/middleware.php';
+require_once __DIR__ . '/../../middleware/AuthMiddleware.php';
 
 Flight::route('POST /register', function() {
     $data = Flight::request()->data->getData();
